@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nico's Abstract Art</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Neue', cursive;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    header {
+      background: #ff6f91;
+      text-align: center;
+      padding: 2rem;
+      font-size: 2.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    .art-piece {
+      width: 280px;
+      height: 280px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      overflow: hidden;
+      border: 6px solid #fff;
+      transition: transform 0.3s;
+    }
+    .art-piece img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease-in-out;
+    }
+    .art-piece:hover img {
+      transform: scale(1.05);
+    }
+    .about {
+      background: #ffcc70;
+      color: #222;
+      padding: 2rem;
+      font-size: 1.3rem;
+      text-align: center;
+    }
+    footer {
+      background: #845ec2;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1rem;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    🎨 Welcome to Nico's Abstract Art! 🌈
+  </header>
+
+  <section class="gallery">
+    <div class="art-piece">
+      <img src="..\nico-art\art1.jpg" alt="Abstract Art 1">
+    </div>
+    <div class="art-piece">
+      <img src="..\nico-art\art2.jpg" alt="Abstract Art 2">
+    </div>
+    <div class="art-piece">
+      <img src="..\nico-art\art3.jpg" alt="Abstract Art 3">
+    </div>
+    <div class="art-piece">
+      <img src="..\nico-art\art4.jpg" alt="Abstract Art 4">
+    </div>
+  </section>
+
+  <section class="about">
+    <h2>About Nico</h2>
+    <p>Nico is a young artist who uses Mega Blocks to create abstract works of art. His art is inspired by bright colors and chickens. 🌟</p>
+  </section>
+
+  <section class="about">
+    <h2>Delivery Service</h2>
+    <p>Nico can deliver Mega Blocks to your house for you to make abstract art like me! 🌟</p>
+  </section>
+
+  <section class="about">
+    <h2>Silk Art Abstract Online Game</h2>
+    <a href="http://weavesilk.com/">Make art online with this website!</a>
+    <p>You could also come to my house and use even bigger blocks and me!</p>
+  </section>
+  
+  <footer>
+    © 2025 Nico's Abstract Art | Made with ❤️ and Mega Blocks
+    
+    <a href="../index.html">Click here to go back</a>
+  </footer>
+</body>
+</html>
