@@ -1,70 +1,576 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nico West's Fun Page</title>
-  <!-- Link to the CSS file -->
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nico West's Fun Page</title>
+<meta name="description" content="Nico West's fun page — 6 years old, first grade, and full of favorite games, videos, books, and toys!">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%8A%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal-900:#053b38;
+    --teal-700:#0b5c56;
+    --teal-600:#0e7a71;
+    --teal-500:#16988c;
+    --teal-300:#68c7ba;
+    --blue-400:#5fd0e8;
+    --blue-300:#9fe3f0;
+    --blue-100:#e4f8fb;
+    --white:#ffffff;
+    --ink:#083634;
+    --shadow-sm: 0 4px 14px rgba(5,59,56,0.10);
+    --shadow-md: 0 14px 34px rgba(5,59,56,0.16);
+    --radius-lg: 26px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    font-family:'Nunito', sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 10% 8%, var(--blue-100) 0%, transparent 45%),
+      radial-gradient(circle at 90% 4%, var(--blue-300) 0%, transparent 35%),
+      linear-gradient(180deg, #ffffff 0%, var(--blue-100) 100%);
+    background-attachment:fixed;
+    overflow-x:hidden;
+  }
+
+  a{color:var(--teal-700);}
+  a:focus-visible, button:focus-visible, summary:focus-visible{
+    outline:3px solid var(--teal-500);
+    outline-offset:3px;
+    border-radius:6px;
+  }
+
+  h1,h2,h3{
+    font-family:'Baloo 2', sans-serif;
+    color:var(--teal-900);
+    margin:0 0 .3em 0;
+    line-height:1.15;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+
+  /* ---------- Floating bubbles ---------- */
+  .bubbles{position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;}
+  .bubble{
+    position:absolute;
+    bottom:-120px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(159,227,240,.35));
+    animation:rise linear infinite;
+  }
+  @keyframes rise{
+    0%{ transform:translateY(0) translateX(0); opacity:0; }
+    10%{ opacity:.55; }
+    100%{ transform:translateY(-115vh) translateX(20px); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bubble{animation:none; display:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- Header / Hero ---------- */
+  header.hero{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    padding:64px 20px 40px;
+  }
+  .hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:2px solid var(--blue-300);
+    color:var(--teal-700);
+    font-weight:700;
+    padding:8px 18px;
+    border-radius:999px;
+    box-shadow:var(--shadow-sm);
+    font-size:.95rem;
+    margin-bottom:18px;
+  }
+  header.hero h1{
+    font-size:clamp(2.2rem, 5vw, 3.4rem);
+    font-weight:800;
+  }
+  header.hero p.tagline{
+    font-size:clamp(1.05rem, 2vw, 1.3rem);
+    font-weight:700;
+    color:var(--teal-600);
+    margin-top:6px;
+  }
+
+  nav.quicklinks{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+    margin-top:26px;
+  }
+  nav.quicklinks a{
+    text-decoration:none;
+    font-weight:700;
+    font-size:.95rem;
+    color:var(--teal-700);
+    background:var(--white);
+    border:2px solid var(--blue-300);
+    padding:8px 16px;
+    border-radius:999px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  nav.quicklinks a:hover{
+    transform:translateY(-2px);
+    background:var(--blue-100);
+  }
+
+  /* ---------- Wave divider ---------- */
+  .wave{display:block; width:100%; height:70px; color:var(--teal-500);}
+  .wave path{fill:currentColor;}
+  .section-teal .wave-top{color:var(--teal-500);}
+
+  /* ---------- Sections ---------- */
+  section{position:relative; z-index:1; padding:10px 0 70px;}
+  .section-teal{
+    background:linear-gradient(180deg, var(--teal-500) 0%, var(--teal-600) 100%);
+    color:var(--white);
+  }
+  .section-teal h2, .section-teal p.section-intro{color:var(--white);}
+  .section-teal .wave.flip{transform:rotate(180deg); color:var(--teal-600);}
+
+  .section-head{
+    text-align:center;
+    max-width:640px;
+    margin:0 auto 34px;
+    padding:0 20px;
+  }
+  .section-head h2{font-size:clamp(1.6rem, 3.2vw, 2.2rem);}
+  .section-head p.section-intro{
+    color:var(--teal-700);
+    font-weight:600;
+    margin-top:6px;
+  }
+
+  /* ---------- Link cards grid ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+    gap:22px;
+  }
+  .card{
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-md);
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    color:var(--ink);
+  }
+  .card .emoji{font-size:2rem;}
+  .card h3{font-size:1.2rem; color:var(--teal-900);}
+  .card p{margin:0; font-size:.96rem; line-height:1.45;}
+  .card .cta{
+    margin-top:auto;
+    align-self:flex-start;
+    text-decoration:none;
+    font-weight:800;
+    color:var(--white);
+    background:var(--teal-500);
+    padding:9px 18px;
+    border-radius:999px;
+    font-size:.9rem;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .card .cta:hover{background:var(--teal-700); transform:translateY(-2px);}
+
+  .video-frame{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    border-radius:var(--radius-md);
+    overflow:hidden;
+    background:var(--blue-100);
+  }
+  .video-frame iframe{
+    position:absolute; inset:0; width:100%; height:100%; border:0;
+  }
+
+  .book-cover{
+    width:100%;
+    border-radius:var(--radius-md);
+    display:block;
+    box-shadow:var(--shadow-sm);
+  }
+
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:2px;}
+  .chip{
+    text-decoration:none;
+    font-weight:700;
+    font-size:.85rem;
+    color:var(--teal-700);
+    background:var(--blue-100);
+    border:2px solid var(--blue-300);
+    padding:7px 14px;
+    border-radius:999px;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .chip:hover{background:var(--blue-300); transform:translateY(-2px);}
+
+  /* ---------- Toy slider ---------- */
+  .slider{
+    max-width:560px;
+    margin:0 auto;
+    position:relative;
+  }
+  .slider-viewport{
+    overflow:hidden;
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-md);
+    background:var(--white);
+  }
+  .slider-track{
+    display:flex;
+    transition:transform .45s cubic-bezier(.65,0,.35,1);
+  }
+  .slide{
+    flex:0 0 100%;
+    padding:26px;
+    text-align:center;
+    color:var(--ink);
+  }
+  .slide img{
+    width:100%;
+    max-width:280px;
+    aspect-ratio:1/1;
+    object-fit:contain;
+    background:var(--blue-100);
+    border-radius:var(--radius-md);
+    padding:14px;
+    margin:0 auto 16px;
+    display:block;
+  }
+  .slide h3{color:var(--teal-900); font-size:1.15rem;}
+  .slide p{margin:6px 0 0; font-size:.95rem; color:var(--ink);}
+
+  .slider-controls{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    margin-top:16px;
+  }
+  .slider-btn{
+    width:44px; height:44px;
+    border-radius:50%;
+    border:none;
+    background:var(--white);
+    color:var(--teal-700);
+    font-size:1.3rem;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow:var(--shadow-sm);
+    transition:transform .15s ease, background .15s ease;
+  }
+  .slider-btn:hover{background:var(--blue-100); transform:scale(1.08);}
+  .slider-dots{display:flex; gap:8px;}
+  .slider-dots button{
+    width:10px; height:10px; border-radius:50%;
+    border:none; background:var(--blue-300); cursor:pointer; padding:0;
+  }
+  .slider-dots button[aria-current="true"]{background:var(--teal-500); width:26px; border-radius:999px; transition:width .2s ease;}
+
+  /* ---------- Games / drink / gallery ---------- */
+  .simple-card{
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-md);
+    padding:30px;
+    max-width:520px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .simple-card .cta{
+    display:inline-block;
+    text-decoration:none;
+    font-weight:800;
+    color:var(--white);
+    background:var(--teal-500);
+    padding:11px 24px;
+    border-radius:999px;
+    margin-top:14px;
+  }
+  .simple-card .cta:hover{background:var(--teal-700);}
+
+  details.drink summary{
+    cursor:pointer;
+    font-weight:800;
+    color:var(--teal-700);
+    font-size:1.05rem;
+    list-style:none;
+  }
+  details.drink summary::-webkit-details-marker{display:none;}
+  details.drink summary::after{content:" 🍋"; }
+  details.drink[open] summary::after{content:" 💛"; }
+  details.drink img{
+    width:100%;
+    max-width:320px;
+    border-radius:var(--radius-md);
+    margin-top:16px;
+    box-shadow:var(--shadow-sm);
+  }
+
+  .gallery-banner{
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-md);
+    padding:34px;
+    text-align:center;
+    max-width:640px;
+    margin:0 auto;
+  }
+  .gallery-banner .cta{
+    display:inline-block;
+    text-decoration:none;
+    font-weight:800;
+    color:var(--white);
+    background:linear-gradient(120deg, var(--teal-500), var(--blue-400));
+    padding:12px 26px;
+    border-radius:999px;
+    margin-top:10px;
+    font-size:1.05rem;
+  }
+
+  footer{
+    text-align:center;
+    padding:40px 20px 60px;
+    color:var(--teal-700);
+    font-weight:800;
+    font-size:1.1rem;
+    position:relative;
+    z-index:1;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Welcome to Nico West's Fun Page!</h1>
-    </header>
 
-    <section>
-      <p>Nico is 5 years old and loves all things fun and colorful!</p>
-    </section>
+<div class="bubbles" aria-hidden="true">
+  <span class="bubble" style="left:6%; width:16px; height:16px; animation-duration:14s; animation-delay:0s;"></span>
+  <span class="bubble" style="left:18%; width:10px; height:10px; animation-duration:11s; animation-delay:2s;"></span>
+  <span class="bubble" style="left:32%; width:22px; height:22px; animation-duration:17s; animation-delay:1s;"></span>
+  <span class="bubble" style="left:47%; width:12px; height:12px; animation-duration:13s; animation-delay:4s;"></span>
+  <span class="bubble" style="left:61%; width:18px; height:18px; animation-duration:16s; animation-delay:3s;"></span>
+  <span class="bubble" style="left:75%; width:9px; height:9px; animation-duration:10s; animation-delay:0.5s;"></span>
+  <span class="bubble" style="left:88%; width:20px; height:20px; animation-duration:15s; animation-delay:5s;"></span>
+</div>
 
-    <section class="rainbow-section">
+<header class="hero">
+  <div class="hero-badge">🌊 Nico's Fun Page</div>
+  <h1>Welcome to Nico West's Fun Page!</h1>
+  <p class="tagline">6 years old &middot; First grade &middot; Loves all things fun and colorful!</p>
+  <nav class="quicklinks" aria-label="Page sections">
+    <a href="#favorites">Favorite Links</a>
+    <a href="#toys">Favorite Toys</a>
+    <a href="#play">Games &amp; Drinks</a>
+    <a href="#gallery">Art Gallery</a>
+  </nav>
+</header>
+
+<section id="favorites" class="section-teal">
+  <svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,35 C240,70 480,0 720,35 C960,70 1200,0 1440,35 L1440,0 L0,0 Z"></path></svg>
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Nico's Favorite Links</h2>
+      <p class="section-intro">Games, videos, a book, and a few secret internet tricks!</p>
+    </div>
+
+    <div class="card-grid">
+
       <div class="card">
-        <h3><a href="nico-art/index.html">Visit Nico's Abstract Art Gallery 🎨🌈</a></h3>
+        <span class="emoji">🍉</span>
+        <h3>Slice Master</h3>
+        <p>Nico's favorite game to play on Coolmath Games &mdash; slice everything in sight!</p>
+        <a class="cta" href="https://www.coolmathgames.com/0-slice-master" target="_blank" rel="noopener">Play Slice Master</a>
       </div>
-    </section>
-    
-    <section class="rainbow-section">
-      <h2>Watch Nico's Favorite Video:</h2>
-      <div class="video-container">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/7qHYwOzaZrU?si=_Rjc1aMxChHCvb9F" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      </div>
-    </section>
 
-    <section>
-      <h2>Color by Number Game</h2>
-      <p><a href="https://www.turtlediary.com/game/color-by-number.html" target="_blank">Click here to play Color by Number!</a></p>
-    </section>
-
-    <section class="favorite-drink">
-      <h2>Nico's Favorite Drink</h2>
-      <p>Nico's favorite drink is lemonade!</p>
-      <p>Hover your mouse here to see a picture of lemonade:</p>
-      <div class="lemonade-image-container">
-        <!-- Hidden image of lemonade -->
-        <img id="lemonade-image" src="https://www.allrecipes.com/thmb/-sGgcEhnlIhqr0legC4Q7TPkRhU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/32385-best-lemonade-ever-DDMFS-4x3-8cef7761205e417499c89eb178e5ba2b.jpg" alt="Lemonade" />
-      </div>
-    </section>
-
-    <!-- Image Carousel Section -->
-    <section class="favorite-things-carousel">
-      <h2>Some of Nico's Favorite Things</h2>
-      <div class="carousel">
-        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
-        <div class="carousel-images">
-          <img class="carousel-item" src="https://m.media-amazon.com/images/I/71jvaFZ54-L._AC_SL1000_.jpg" alt="Alphabet Robots">
-          <img class="carousel-item" src="https://upload.wikimedia.org/wikipedia/en/1/18/We_Will_Rock_You_by_Queen_%281977_French_single%29.png" alt="Queen We Will Rock You">
-          <img class="carousel-item" src="https://www.magnatiles.com/wp-content/uploads/2019/01/MT-Classic32_FOP-1.png" alt="Magnatiles">
+      <div class="card">
+        <span class="emoji">🕺</span>
+        <h3>Gangnam Style</h3>
+        <p>Nico's favorite video to watch &mdash; PSY's "Gangnam Style"!</p>
+        <div class="video-frame">
+          <iframe src="https://www.youtube-nocookie.com/embed/9bZkp7q19f0" title="PSY - Gangnam Style official video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <button class="next" onclick="changeSlide(1)">&#10095;</button>
       </div>
-    </section>
 
-    <footer>
-      <p>Have a colorful day!</p>
-    </footer>
+      <div class="card">
+        <span class="emoji">🐟</span>
+        <h3>The Pout-Pout Fish</h3>
+        <p>Nico's favorite book, by Deborah Diesen and Dan Hanna.</p>
+        <img class="book-cover" src="https://covers1.booksamillion.com/covers/bam/0/31/267/481/0312674813_b.jpg" alt="Cover of the picture book The Pout-Pout Fish, showing a grumpy cartoon fish underwater">
+        <a class="cta" href="https://deborahdiesen.com/books/poutpoutfish/" target="_blank" rel="noopener">Learn More</a>
+      </div>
+
+      <div class="card">
+        <span class="emoji">🎵</span>
+        <h3>B2b by Charli xcx</h3>
+        <p>Nico's favorite song to listen to!</p>
+        <div class="video-frame">
+          <iframe src="https://www.youtube-nocookie.com/embed/V5kjERlcOjQ" title="Charli xcx - b2b official video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="emoji">🥚</span>
+        <h3>Google Easter Eggs</h3>
+        <p>Nico's favorite hidden Google tricks, from elgooG!</p>
+        <div class="chip-row">
+          <a class="chip" href="https://elgoog.im/pacman/" target="_blank" rel="noopener">Pac-Man</a>
+          <a class="chip" href="https://elgoog.im/gravity/" target="_blank" rel="noopener">Google Gravity</a>
+          <a class="chip" href="https://elgoog.im/underwater/" target="_blank" rel="noopener">Underwater</a>
+          <a class="chip" href="https://elgoog.im/guitar/" target="_blank" rel="noopener">Google Guitar</a>
+        </div>
+      </div>
+
+    </div>
   </div>
+  <svg class="wave flip" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,35 C240,70 480,0 720,35 C960,70 1200,0 1440,35 L1440,0 L0,0 Z"></path></svg>
+</section>
 
-  <!-- Link to the JavaScript file -->
-  <script src="script.js"></script>
+<section id="toys">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Nico's Favorite Toys</h2>
+      <p class="section-intro">Swipe or click through Nico's top three!</p>
+    </div>
+
+    <div class="slider" id="toy-slider">
+      <div class="slider-viewport">
+        <div class="slider-track">
+          <div class="slide">
+            <img src="https://i5.walmartimages.com/seo/Playkidz-Magic-Show-Kids-Deluxe-Set-100-Tricks-Made-Simple-Magician-Pretend-Play-Set-Wand-Magic-Tricks-Easy-Learn-Instruction-Manual-Best-Gift-Beginn_1d469c03-ec89-4509-a96e-d9f0fa12b6c9.70776406e744e4f90719effa2979977f.jpeg" alt="Playkidz magician's magic trick set with wand and props">
+            <h3>Magician's Set</h3>
+            <p>Nico loves pulling off tricks and shouting "abracadabra!"</p>
+          </div>
+          <div class="slide">
+            <img src="https://i5.walmartimages.com/seo/Celestial-Buddies-Solar-System-Set-12-Piece-Planet-Plush-Toy-Educational-Science-Space-Learning-Soft-Cuddly-Ages-0_7d034d9f-9511-46a7-8967-735292afe4e8.ca914ba3f0b4db218dc72867c10db577.jpeg" alt="Celestial Buddies plush solar system set with soft planet toys">
+            <h3>Celestial Buddies Plushies</h3>
+            <p>Soft, huggable planets &mdash; Nico's favorite way to learn the solar system!</p>
+          </div>
+          <div class="slide">
+            <img src="https://res.cloudinary.com/hdtsjhzsw/image/upload/s--TS_ylTT8--/q_auto/c_fit,w_505,h_518/fccf98c5caba24155c4694268966b10d0beb0a0c.jpg" alt="Hands-On Tally Marks colorful counting manipulatives">
+            <h3>Hands-On Tally Marks</h3>
+            <p>Counting is extra fun with these colorful tally-mark counters!</p>
+          </div>
+        </div>
+      </div>
+      <div class="slider-controls">
+        <button class="slider-btn" id="toy-prev" aria-label="Previous toy">&#10094;</button>
+        <div class="slider-dots" id="toy-dots"></div>
+        <button class="slider-btn" id="toy-next" aria-label="Next toy">&#10095;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="play" class="section-teal">
+  <svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,35 C240,70 480,0 720,35 C960,70 1200,0 1440,35 L1440,0 L0,0 Z"></path></svg>
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Games &amp; Drinks</h2>
+      <p class="section-intro">A little more fun before you go!</p>
+    </div>
+
+    <div class="card-grid" style="max-width:760px; margin:0 auto;">
+      <div class="simple-card">
+        <span class="emoji">🎨</span>
+        <h3>Color by Number</h3>
+        <p>Click below to play Nico's favorite coloring game!</p>
+        <a class="cta" href="https://www.turtlediary.com/game/color-by-number.html" target="_blank" rel="noopener">Play Now</a>
+      </div>
+
+      <div class="simple-card">
+        <details class="drink">
+          <summary>Nico's Favorite Drink</summary>
+          <p style="margin-top:10px;">Nico's favorite drink is lemonade! Click to see a picture.</p>
+          <img src="https://www.allrecipes.com/thmb/-sGgcEhnlIhqr0legC4Q7TPkRhU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/32385-best-lemonade-ever-DDMFS-4x3-8cef7761205e417499c89eb178e5ba2b.jpg" alt="A cold glass of fresh lemonade">
+        </details>
+      </div>
+    </div>
+  </div>
+  <svg class="wave flip" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,35 C240,70 480,0 720,35 C960,70 1200,0 1440,35 L1440,0 L0,0 Z"></path></svg>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="gallery-banner">
+      <span class="emoji">🎨</span>
+      <h2 style="margin-top:8px;">Nico's Abstract Art Gallery</h2>
+      <p>Come see Nico's colorful masterpieces!</p>
+      <a class="cta" href="nico-art/index.html">Visit the Gallery 🌈</a>
+    </div>
+  </div>
+</section>
+
+<footer>Have a colorful day!</footer>
+
+<script>
+  (function(){
+    var track = document.querySelector('#toy-slider .slider-track');
+    var slides = document.querySelectorAll('#toy-slider .slide');
+    var dotsWrap = document.getElementById('toy-dots');
+    var prevBtn = document.getElementById('toy-prev');
+    var nextBtn = document.getElementById('toy-next');
+    var index = 0;
+
+    slides.forEach(function(_, i){
+      var dot = document.createElement('button');
+      dot.setAttribute('aria-label', 'Go to toy ' + (i + 1));
+      dot.addEventListener('click', function(){ goTo(i); });
+      dotsWrap.appendChild(dot);
+    });
+    var dots = dotsWrap.querySelectorAll('button');
+
+    function render(){
+      track.style.transform = 'translateX(-' + (index * 100) + '%)';
+      dots.forEach(function(d, i){
+        d.setAttribute('aria-current', i === index ? 'true' : 'false');
+      });
+    }
+    function goTo(i){
+      index = (i + slides.length) % slides.length;
+      render();
+    }
+
+    prevBtn.addEventListener('click', function(){ goTo(index - 1); });
+    nextBtn.addEventListener('click', function(){ goTo(index + 1); });
+
+    var startX = null;
+    var viewport = document.querySelector('#toy-slider .slider-viewport');
+    viewport.addEventListener('pointerdown', function(e){ startX = e.clientX; });
+    viewport.addEventListener('pointerup', function(e){
+      if(startX === null) return;
+      var dx = e.clientX - startX;
+      if(dx > 40) goTo(index - 1);
+      else if(dx < -40) goTo(index + 1);
+      startX = null;
+    });
+
+    render();
+  })();
+</script>
+
 </body>
 </html>
